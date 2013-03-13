@@ -31,14 +31,15 @@ import com.hellblazer.primeMover.NonEvent;
  * 
  */
 
+@SuppressWarnings("restriction")
 public interface Perceiving {
 
-    void fade(Perceiving neighbor);
+	void fade(Perceiving neighbor);
 
-    void move(Perceiving neighbor, Point3i location, Vector3i velocity);
+	void move(Perceiving neighbor, Point3i location, Vector3i velocity);
 
-    void notice(Perceiving neighbor, Point3i location);
+	void notice(Perceiving neighbor, Point3i location);
 
-    @NonEvent
-    void setCursor(Cursor cursor);
+	@NonEvent
+	void setCursor(Cursor cursor);
 }

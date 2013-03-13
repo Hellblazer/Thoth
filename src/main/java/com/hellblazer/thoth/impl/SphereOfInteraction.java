@@ -32,97 +32,98 @@ import javax.vecmath.Point3i;
  * 
  */
 
+@SuppressWarnings("restriction")
 public interface SphereOfInteraction {
 
-    /**
-     * returns the closest node to a point
-     * 
-     * @param coord
-     * @return
-     */
-    Peer closestTo(Point3i coord);
+	/**
+	 * returns the closest node to a point
+	 * 
+	 * @param coord
+	 * @return
+	 */
+	Peer closestTo(Point3i coord);
 
-    /**
-     * Answer the Peer aliased to the Peer
-     * 
-     * @param peer
-     * @return
-     */
-    Peer getAliased(Peer peer);
+	/**
+	 * Answer the Peer aliased to the Peer
+	 * 
+	 * @param peer
+	 * @return
+	 */
+	Peer getAliased(Peer peer);
 
-    /**
-     * get a list of enclosing neighbors
-     * 
-     * @param id
-     * @return
-     */
-    Collection<Peer> getEnclosingNeighbors(Peer id);
+	/**
+	 * get a list of enclosing neighbors
+	 * 
+	 * @param id
+	 * @return
+	 */
+	Collection<Peer> getEnclosingNeighbors(Peer id);
 
-    Iterable<Peer> getPeers();
+	Iterable<Peer> getPeers();
 
-    /**
-     * TODO temporary
-     * 
-     * @return
-     */
-    List<Point2d[]> getVoronoiDomainEdges();
+	/**
+	 * TODO temporary
+	 * 
+	 * @return
+	 */
+	List<Point2d[]> getVoronoiDomainEdges();
 
-    /**
-     * @param peer
-     * @return
-     */
-    boolean includes(Peer peer);
+	/**
+	 * @param peer
+	 * @return
+	 */
+	boolean includes(Peer peer);
 
-    /**
-     * insert a new site, the first inserted is myself
-     * 
-     * @param id
-     * @param coord
-     */
-    void insert(Peer id, Point3i coord);
+	/**
+	 * insert a new site, the first inserted is myself
+	 * 
+	 * @param id
+	 * @param coord
+	 */
+	void insert(Peer id, Point3i coord);
 
-    /**
-     * check if the node is a boundary neighbor
-     * 
-     * @param peer
-     * @param center
-     * @param radiusSquared
-     * @return
-     */
-    boolean isBoundary(Peer peer, Point3i center, int radiusSquared);
+	/**
+	 * check if the node is a boundary neighbor
+	 * 
+	 * @param peer
+	 * @param center
+	 * @param radiusSquared
+	 * @return
+	 */
+	boolean isBoundary(Peer peer, Point3i center, int radiusSquared);
 
-    /**
-     * check if the node 'id' is an enclosing neighbor of 'center_node_id'
-     * 
-     * @param peer
-     * @param center_node_id
-     * @return
-     */
-    boolean isEnclosing(Peer peer, Peer center_node_id);
+	/**
+	 * check if the node 'id' is an enclosing neighbor of 'center_node_id'
+	 * 
+	 * @param peer
+	 * @param center_node_id
+	 * @return
+	 */
+	boolean isEnclosing(Peer peer, Peer center_node_id);
 
-    /**
-     * check if a circle overlaps with a particular node
-     * 
-     * @param peer
-     * @param center
-     * @param radiusSquared
-     * @return
-     */
-    boolean overlaps(Peer peer, Point3i center, int radiusSquared);
+	/**
+	 * check if a circle overlaps with a particular node
+	 * 
+	 * @param peer
+	 * @param center
+	 * @param radiusSquared
+	 * @return
+	 */
+	boolean overlaps(Peer peer, Point3i center, int radiusSquared);
 
-    /**
-     * remove a site
-     * 
-     * @param peer
-     */
-    void remove(Peer peer);
+	/**
+	 * remove a site
+	 * 
+	 * @param peer
+	 */
+	void remove(Peer peer);
 
-    /**
-     * modify the coordinates of a site
-     * 
-     * @param peer
-     * @param coord
-     */
-    void update(Peer peer, Point3i coord);
+	/**
+	 * modify the coordinates of a site
+	 * 
+	 * @param peer
+	 * @param coord
+	 */
+	void update(Peer peer, Point3i coord);
 
 }

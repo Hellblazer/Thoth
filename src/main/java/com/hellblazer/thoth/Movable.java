@@ -28,8 +28,9 @@ import javax.vecmath.Tuple3i;
  * 
  */
 
+@SuppressWarnings("restriction")
 public interface Movable {
 
-    void moveBy(Tuple3i velocity);
+	void moveBy(Tuple3i velocity);
 
 }

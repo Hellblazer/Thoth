@@ -43,6 +43,7 @@ import com.hellblazer.thoth.voronoi.SFVoronoi;
  * 
  */
 
+@SuppressWarnings("restriction")
 @Entity({ Node.class, Movable.class })
 public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     protected boolean active = true;

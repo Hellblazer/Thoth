@@ -28,7 +28,8 @@ import javax.vecmath.Point3i;
  * 
  */
 
+@SuppressWarnings("restriction")
 public interface Locatable {
 
-    Point3i getLocation();
+	Point3i getLocation();
 }

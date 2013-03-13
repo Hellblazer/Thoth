@@ -37,87 +37,68 @@ import com.hellblazer.thoth.Perceiving;
  * 
  */
 
+@SuppressWarnings("restriction")
 public class SimulationDriver {
-    public static final int AOI_RADIUS = 200;
-    public static final int dim_x = 1200;
-    public static final int dim_y = 1200;
-    public static final int ENTRY_PERIOD = 10000;
-    public static final int FLIP_STEP_CONSTANT = 100;
-    public static final int MAX_VELOCITY = 10;
-    public static final int MOVES = 2000;
-    public static final int NUMBER_OF_NODES = 100;
+	public static final int AOI_RADIUS = 200;
+	public static final int dim_x = 1200;
+	public static final int dim_y = 1200;
+	public static final int ENTRY_PERIOD = 10000;
+	public static final int FLIP_STEP_CONSTANT = 100;
+	public static final int MAX_VELOCITY = 10;
+	public static final int MOVES = 2000;
+	public static final int NUMBER_OF_NODES = 100;
 
-    public static final int RANDOM_SEED = 666;
+	public static final int RANDOM_SEED = 666;
 
-    public static final int THINK_TIME = 1000;
+	public static final int THINK_TIME = 1000;
 
-    public static void main(String[] argv) throws Exception {
-        SimulationController controller = new SimulationController();
-        Framework.setController(controller);
-        long now = System.currentTimeMillis();
-        new SimulationDriver().run();
-        controller.eventLoop();
-        System.out.println("real time elapsed: "
-                           + (System.currentTimeMillis() - now) / 1000.0
-                           + " Seconds");
-        System.out.println("simulation time elapsed: "
-                           + (controller.getSimulationEnd() - controller.getSimulationStart()));
-        System.out.println("Spectrum : ");
-        for (Map.Entry<String, Integer> spectrumEntry : controller.getSpectrum().entrySet()) {
-            System.out.println("\t" + spectrumEntry.getValue() + "\t\t : "
-                               + spectrumEntry.getKey());
-        }
-    }
+	public static void main(String[] argv) throws Exception {
+		SimulationController controller = new SimulationController();
+		Framework.setController(controller);
+		long now = System.currentTimeMillis();
+		new SimulationDriver().run();
+		controller.eventLoop();
+		System.out.println("real time elapsed: "
+				+ (System.currentTimeMillis() - now) / 1000.0 + " Seconds");
+		System.out.println("simulation time elapsed: "
+				+ (controller.getSimulationEnd() - controller
+						.getSimulationStart()));
+		System.out.println("Spectrum : ");
+		for (Map.Entry<String, Integer> spectrumEntry : controller
+				.getSpectrum().entrySet()) {
+			System.out.println("\t" + spectrumEntry.getValue() + "\t\t : "
+					+ spectrumEntry.getKey());
+		}
+	}
 
-    public void run() {
-        Kronos.endSimulationAt(600 * 1000);
-        Random idGenerator = new Random(RANDOM_SEED);
-        Random simRandom = new Random(RANDOM_SEED);
-        SelfDirectedEntity gatewayEntity = new SelfDirectedEntity(
-                                                                  simRandom,
-                                                                  THINK_TIME,
-                                                                  FLIP_STEP_CONSTANT,
-                                                                  MAX_VELOCITY,
-                                                                  dim_x, dim_y);
-        Perceptron<Perceiving> gateway = new Perceptron<Perceiving>(
-                                                                    gatewayEntity,
-                                                                    new UUID(
-                                                                             idGenerator.nextLong(),
-                                                                             idGenerator.nextLong()),
-                                                                    new Point3i(
-                                                                                simRandom.nextInt(dim_x),
-                                                                                simRandom.nextInt(dim_y),
-                                                                                0),
-                                                                    AOI_RADIUS,
-                                                                    10, true);
-        gateway.join(gateway.getThisAsPeer());
-        for (int i = 1; i < NUMBER_OF_NODES; i++) {
-            SelfDirectedEntity simEntity = new SelfDirectedEntity(
-                                                                  simRandom,
-                                                                  THINK_TIME,
-                                                                  FLIP_STEP_CONSTANT,
-                                                                  MAX_VELOCITY,
-                                                                  dim_x, dim_y);
-            Perceptron<Perceiving> node = new Perceptron<Perceiving>(
-                                                                     simEntity,
-                                                                     new UUID(
-                                                                              idGenerator.nextLong(),
-                                                                              idGenerator.nextLong()),
-                                                                     new Point3i(
-                                                                                 simRandom.nextInt(dim_x),
-                                                                                 simRandom.nextInt(dim_y),
-                                                                                 0),
-                                                                     AOI_RADIUS,
-                                                                     10, true);
-            start(simEntity, node, gateway.getThisAsPeer(), simRandom);
-        }
-        gatewayEntity.doSomething();
-    }
+	public void run() {
+		Kronos.endSimulationAt(600 * 1000);
+		Random idGenerator = new Random(RANDOM_SEED);
+		Random simRandom = new Random(RANDOM_SEED);
+		SelfDirectedEntity gatewayEntity = new SelfDirectedEntity(simRandom,
+				THINK_TIME, FLIP_STEP_CONSTANT, MAX_VELOCITY, dim_x, dim_y);
+		Perceptron<Perceiving> gateway = new Perceptron<Perceiving>(
+				gatewayEntity, new UUID(idGenerator.nextLong(),
+						idGenerator.nextLong()), new Point3i(
+						simRandom.nextInt(dim_x), simRandom.nextInt(dim_y), 0),
+				AOI_RADIUS, 10, true);
+		gateway.join(gateway.getThisAsPeer());
+		for (int i = 1; i < NUMBER_OF_NODES; i++) {
+			SelfDirectedEntity simEntity = new SelfDirectedEntity(simRandom,
+					THINK_TIME, FLIP_STEP_CONSTANT, MAX_VELOCITY, dim_x, dim_y);
+			Perceptron<Perceiving> node = new Perceptron<Perceiving>(simEntity,
+					new UUID(idGenerator.nextLong(), idGenerator.nextLong()),
+					new Point3i(simRandom.nextInt(dim_x),
+							simRandom.nextInt(dim_y), 0), AOI_RADIUS, 10, true);
+			start(simEntity, node, gateway.getThisAsPeer(), simRandom);
+		}
+		gatewayEntity.doSomething();
+	}
 
-    public void start(SimEntity entity, Perceptron<Perceiving> node,
-                      AbstractNode<Perceiving> gateway, Random simRandom) {
-        Kronos.sleep(simRandom.nextInt(ENTRY_PERIOD));
-        node.join(gateway);
-        entity.doSomething();
-    }
+	public void start(SimEntity entity, Perceptron<Perceiving> node,
+			AbstractNode<Perceiving> gateway, Random simRandom) {
+		Kronos.sleep(simRandom.nextInt(ENTRY_PERIOD));
+		node.join(gateway);
+		entity.doSomething();
+	}
 }

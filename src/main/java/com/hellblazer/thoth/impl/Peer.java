@@ -33,53 +33,54 @@ import com.hellblazer.thoth.Perceiving;
  * 
  */
 
+@SuppressWarnings("restriction")
 public class Peer extends AbstractNode<Perceiving> {
-    protected Node peer;
+	protected Node peer;
 
-    public Peer(Node peer, Perceiving sim, UUID id, Point3i location,
-                int aoiRadius, int maximumVelocity) {
-        super(sim, id, location, aoiRadius, maximumVelocity);
-        this.peer = peer;
-    }
+	public Peer(Node peer, Perceiving sim, UUID id, Point3i location,
+			int aoiRadius, int maximumVelocity) {
+		super(sim, id, location, aoiRadius, maximumVelocity);
+		this.peer = peer;
+	}
 
-    @Override
-    public Peer clone() {
-        return (Peer) super.clone();
-    }
+	@Override
+	public Peer clone() {
+		return (Peer) super.clone();
+	}
 
-    @Override
-    public void fadeFrom(Peer neighbor) {
-        peer.fadeFrom(neighbor);
-    }
+	@Override
+	public void fadeFrom(Peer neighbor) {
+		peer.fadeFrom(neighbor);
+	}
 
-    @Override
-    public void leave(Peer leaving) {
-        peer.leave(leaving);
-    }
+	@Override
+	public void leave(Peer leaving) {
+		peer.leave(leaving);
+	}
 
-    @Override
-    public void move(Peer neighbor) {
-        peer.move(neighbor);
-    }
+	@Override
+	public void move(Peer neighbor) {
+		peer.move(neighbor);
+	}
 
-    @Override
-    public void moveBoundary(Peer neighbor) {
-        peer.moveBoundary(neighbor);
-    }
+	@Override
+	public void moveBoundary(Peer neighbor) {
+		peer.moveBoundary(neighbor);
+	}
 
-    @Override
-    public void noticePeers(Collection<Peer> peers) {
-        peer.noticePeers(peers);
-    }
+	@Override
+	public void noticePeers(Collection<Peer> peers) {
+		peer.noticePeers(peers);
+	}
 
-    @Override
-    public void perceive(Peer neighbor) {
-        peer.perceive(neighbor);
-    }
+	@Override
+	public void perceive(Peer neighbor) {
+		peer.perceive(neighbor);
+	}
 
-    @Override
-    public void query(Peer from, Peer joiner) {
-        peer.query(from, joiner);
-    }
+	@Override
+	public void query(Peer from, Peer joiner) {
+		peer.query(from, joiner);
+	}
 
 }
