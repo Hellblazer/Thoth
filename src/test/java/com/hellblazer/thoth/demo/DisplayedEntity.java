@@ -5,7 +5,7 @@
  * Framework.
  * 
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as 
+ * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
@@ -43,64 +43,53 @@ import com.hellblazer.thoth.impl.SimEntityImpl;
  * 
  */
 
-@SuppressWarnings("restriction")
 public class DisplayedEntity extends SimEntityImpl {
-	final static BasicStroke aoiStroke = new BasicStroke(3.0f);
-	final static int node_radius = 5;
-	final static BasicStroke stroke = new BasicStroke(2.0f);
-	protected Perceptron<Perceiving> perceptron;
+    final static BasicStroke         aoiStroke   = new BasicStroke(3.0f);
+    final static int                 node_radius = 5;
+    final static BasicStroke         stroke      = new BasicStroke(2.0f);
+    protected Perceptron<Perceiving> perceptron;
 
-	public DisplayedEntity(Random random, int thinkTime, int flipStep,
-			int maxVelocity, int dimX, int dimY) {
-		super(random, thinkTime, flipStep, maxVelocity, dimX, dimY);
-	}
+    public DisplayedEntity(Random random, int thinkTime, int flipStep, int maxVelocity, int dimX, int dimY) {
+        super(random, thinkTime, flipStep, maxVelocity, dimX, dimY);
+    }
 
-	public void display(Map<Node, Integer> nodeNames, boolean selected,
-			boolean showEdges, boolean showAoi, int originX, int originY,
-			Graphics2D graphics) {
-		graphics.setStroke(stroke);
-		graphics.setPaint(Color.blue);
-		graphics.draw(new Ellipse2D.Double(locator.getLocation().x
-				- node_radius * 2 - originX, locator.getLocation().y
-				- node_radius * 2 - originY, node_radius * 2 * 2,
-				node_radius * 2 * 2));
-		graphics.drawString("[" + nodeNames.get(perceptron) + "]",
-				locator.getLocation().x - originX, locator.getLocation().y
-						- node_radius * 3 - originY);
-		if (selected) {
-			graphics.setPaint(Color.red);
-			for (AbstractNode<? extends Perceiving> neighbor : perceptron
-					.getNeighbors()) {
-				graphics.drawString("[" + nodeNames.get(neighbor) + "]",
-						neighbor.getLocation().x - originX,
-						neighbor.getLocation().y - node_radius * 3 - originY);
-				graphics.fill(new Ellipse2D.Double(neighbor.getLocation().x
-						- node_radius - originX, neighbor.getLocation().y
-						- node_radius - originY, node_radius * 2,
-						node_radius * 2));
-			}
-			if (showEdges) {
-				List<Point2d[]> edges = perceptron.getVoronoiDomainEdges();
-				for (Point2d[] edge : edges) {
-					graphics.draw(new Line2D.Double(edge[0].x - originX,
-							edge[0].y - originY, edge[1].x - originX, edge[1].y
-									- originY));
-				}
-			}
-			if (showAoi) {
-				graphics.setStroke(aoiStroke);
-				graphics.draw(new Ellipse2D.Double(locator.getLocation().x
-						- perceptron.getAoiRadius() - originX, locator
-						.getLocation().y - perceptron.getAoiRadius() - originY,
-						perceptron.getAoiRadius() * 2, perceptron
-								.getAoiRadius() * 2));
-				graphics.setStroke(stroke);
-			}
-		}
+    public void display(Map<Node, Integer> nodeNames, boolean selected, boolean showEdges, boolean showAoi, int originX,
+                        int originY, Graphics2D graphics) {
+        graphics.setStroke(stroke);
+        graphics.setPaint(Color.blue);
+        graphics.draw(new Ellipse2D.Double(locator.getLocation().x - node_radius * 2 - originX,
+                                           locator.getLocation().y - node_radius * 2 - originY, node_radius * 2 * 2,
+                                           node_radius * 2 * 2));
+        graphics.drawString("[" + nodeNames.get(perceptron) + "]", locator.getLocation().x - originX,
+                            locator.getLocation().y - node_radius * 3 - originY);
+        if (selected) {
+            graphics.setPaint(Color.red);
+            for (AbstractNode<? extends Perceiving> neighbor : perceptron.getNeighbors()) {
+                graphics.drawString("[" + nodeNames.get(neighbor) + "]", neighbor.getLocation().x - originX,
+                                    neighbor.getLocation().y - node_radius * 3 - originY);
+                graphics.fill(new Ellipse2D.Double(neighbor.getLocation().x - node_radius - originX,
+                                                   neighbor.getLocation().y - node_radius - originY, node_radius * 2,
+                                                   node_radius * 2));
+            }
+            if (showEdges) {
+                List<Point2d[]> edges = perceptron.getVoronoiDomainEdges();
+                for (Point2d[] edge : edges) {
+                    graphics.draw(new Line2D.Double(edge[0].x - originX, edge[0].y - originY, edge[1].x - originX,
+                                                    edge[1].y - originY));
+                }
+            }
+            if (showAoi) {
+                graphics.setStroke(aoiStroke);
+                graphics.draw(new Ellipse2D.Double(locator.getLocation().x - perceptron.getAoiRadius() - originX,
+                                                   locator.getLocation().y - perceptron.getAoiRadius() - originY,
+                                                   perceptron.getAoiRadius() * 2, perceptron.getAoiRadius() * 2));
+                graphics.setStroke(stroke);
+            }
+        }
 
-	}
+    }
 
-	public void setPerceptron(Perceptron<Perceiving> perceptron) {
-		this.perceptron = perceptron;
-	}
+    public void setPerceptron(Perceptron<Perceiving> perceptron) {
+        this.perceptron = perceptron;
+    }
 }

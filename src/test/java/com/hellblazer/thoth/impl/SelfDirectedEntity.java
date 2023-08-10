@@ -27,8 +27,7 @@ import java.util.Random;
 public class SelfDirectedEntity extends SimEntityImpl {
     protected int move = 0;
 
-    public SelfDirectedEntity(Random random, int thinkTime, int flipStep,
-                              int maxVelocity, int dimX, int dimY) {
+    public SelfDirectedEntity(Random random, int thinkTime, int flipStep, int maxVelocity, int dimX, int dimY) {
         super(random, thinkTime, flipStep, maxVelocity, dimX, dimY);
     }
 

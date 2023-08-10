@@ -13,7 +13,7 @@ public class PeerIterable implements Iterable<Peer> {
 
     @Override
     public Iterator<Peer> iterator() {
-        return new Iterator<Peer>() {
+        return new Iterator<>() {
             @Override
             public boolean hasNext() {
                 return iterator.hasNext();
