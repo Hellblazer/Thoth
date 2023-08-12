@@ -20,7 +20,6 @@
 
 package com.hellblazer.thoth.demo;
 
-import java.applet.Applet;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -39,6 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import javax.swing.JFrame;
 import javax.vecmath.Point3i;
 
 import com.hellblazer.primeMover.controllers.SteppingController;
@@ -52,8 +52,7 @@ import com.hellblazer.thoth.impl.Perceptron;
  * 
  */
 
-@SuppressWarnings("removal")
-public class PerceptronSimulation extends Applet implements KeyListener, MouseListener, MouseMotionListener {
+public class PerceptronSimulation extends JFrame implements KeyListener, MouseListener, MouseMotionListener {
     class RefreshTask extends TimerTask {
         @Override
         public void run() {
@@ -84,38 +83,43 @@ public class PerceptronSimulation extends Applet implements KeyListener, MouseLi
     final static BasicStroke  stroke           = new BasicStroke(2.0f);
     private static final int  RANDOM_SEED      = 666;
     private static final long serialVersionUID = 1L;
-    public int                steps            = 0;
-    BufferedImage             buff_i;
-    Graphics2D                buff_ig;
-    SteppingController        controller;
-    int                       currentX, currentY;
-    int                       default_aoi      = 300;
-    int                       dim_x            = 1024;
-    int                       dim_y            = 1024;
-    DisplayedEntity[]         entities;
-    boolean                   follow_mode      = false;
-    int                       mouseX, mouseY;
-    boolean                   next_ready       = true;                        // if we're ready to move to the next step
-    int                       node_radius      = 5;
-    int                       node_size        = 25;
-    Map<Node, Integer>        nodeNames        = new HashMap<Node, Integer>();
-    int                       originX          = 0;
-    int                       originY          = 0;
+
+    public static void main(String[] argv) {
+        var sim = new PerceptronSimulation();
+        sim.setSize(400, 600);
+        sim.init();
+        sim.setVisible(true);
+    }
+
+    public int           steps       = 0;
+    BufferedImage        buff_i;
+    Graphics2D           buff_ig;
+    SteppingController   controller;
+    int                  currentX, currentY;
+    int                  default_aoi = 300;
+    int                  dim_x       = 1024;
+    int                  dim_y       = 1024;
+    DisplayedEntity[]    entities;
+    boolean              follow_mode = false;
+    int                  mouseX, mouseY;
+    boolean              next_ready  = true;                        // if we're ready to move to the next step
+    int                  node_radius = 5;
+    int                  node_size   = 25;
+    Map<Node, Integer>   nodeNames   = new HashMap<Node, Integer>();
+    int                  originX     = 0;
+    int                  originY     = 0;
     @SuppressWarnings("rawtypes")
-    Perceptron[]              perceptrons;                                    // a list of all perceptron nodes created
-    boolean                   running          = true;
-    DisplayedEntity           selectedEntity;
-    int                       selfX            = 250;
-    int                       selfY            = 250;
-    boolean                   show_aoi         = true;
-    boolean                   show_edges       = true;
-    boolean                   show_global      = true;
-    boolean                   step_mode        = true;
-    //
-    // node refresh thread
-    //
+    Perceptron[]         perceptrons;                               // a list of all perceptron nodes created
+    boolean              running     = true;
+    DisplayedEntity      selectedEntity;
+    int                  selfX       = 250;
+    int                  selfY       = 250;
+    boolean              show_aoi    = true;
+    boolean              show_edges  = true;
+    boolean              show_global = true;
+    boolean              step_mode   = true;
     Timer                timer;
-    int                  updateDelay = 20;          // in millisec
+    int                  updateDelay = 20;                          // in millisec
     RefreshTask          updateTask;
     private int          flipStep    = 200;
     private boolean      graphicsInitialized;
@@ -129,7 +133,6 @@ public class PerceptronSimulation extends Applet implements KeyListener, MouseLi
     }
 
     @SuppressWarnings({ "unchecked" })
-    @Override
     public void init() {
         controller = new SteppingController();
         Framework.setController(controller);
