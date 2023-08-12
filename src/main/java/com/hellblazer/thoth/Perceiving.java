@@ -1,19 +1,19 @@
 /**
  * Copyright (C) 2008 Hal Hildebrand. All rights reserved.
- * 
+ *
  * This file is part of the Thoth Interest Management and Load Balancing
  * Framework.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as 
+ * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,23 +23,22 @@ package com.hellblazer.thoth;
 import javax.vecmath.Point3i;
 
 import com.hellblazer.geometry.Vector3i;
-import com.hellblazer.primeMover.NonEvent;
+import com.hellblazer.primeMover.annotations.NonEvent;
 
 /**
- * 
+ *
  * @author <a href="mailto:hal.hildebrand@gmail.com">Hal Hildebrand</a>
- * 
+ *
  */
 
-@SuppressWarnings("restriction")
 public interface Perceiving {
 
-	void fade(Perceiving neighbor);
+    void fade(Perceiving neighbor);
 
-	void move(Perceiving neighbor, Point3i location, Vector3i velocity);
+    void move(Perceiving neighbor, Point3i location, Vector3i velocity);
 
-	void notice(Perceiving neighbor, Point3i location);
+    void notice(Perceiving neighbor, Point3i location);
 
-	@NonEvent
-	void setCursor(Cursor cursor);
+    @NonEvent
+    void setCursor(Cursor cursor);
 }

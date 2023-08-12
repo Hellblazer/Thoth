@@ -1,19 +1,19 @@
 /**
  * Copyright (C) 2009 Hal Hildebrand. All rights reserved.
- * 
+ *
  * This file is part of the Thoth Interest Management and Load Balancing
  * Framework.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as 
+ * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,38 +32,34 @@ import javax.vecmath.Point3i;
 import javax.vecmath.Tuple3i;
 
 import com.hellblazer.geometry.Vector3i;
-import com.hellblazer.primeMover.Entity;
+import com.hellblazer.primeMover.annotations.Entity;
 import com.hellblazer.thoth.Movable;
 import com.hellblazer.thoth.Perceiving;
 import com.hellblazer.thoth.voronoi.SFVoronoi;
 
 /**
- * 
+ *
  * @author <a href="mailto:hal.hildebrand@gmail.com">Hal Hildebrand</a>
- * 
+ *
  */
 
-@SuppressWarnings("restriction")
 @Entity({ Node.class, Movable.class })
 public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
-    protected boolean active = true;
-    protected final SphereOfInteraction soi;
-    protected final Map<UUID, Perceiving> soiSet = new HashMap<UUID, Perceiving>();
-    protected final Peer thisAsPeer;
+    protected boolean                     active = true;
+    protected final SphereOfInteraction   soi;
+    protected final Map<UUID, Perceiving> soiSet = new HashMap<>();
+    protected final Peer                  thisAsPeer;
 
-    public Perceptron(E entity, UUID id, Point3i location, int aoiRadius,
-                      int maximumVelocity) {
+    public Perceptron(E entity, UUID id, Point3i location, int aoiRadius, int maximumVelocity) {
         this(entity, id, location, aoiRadius, maximumVelocity, false);
     }
 
-    public Perceptron(E entity, UUID id, Point3i location, int aoiRadius,
-                      int maximumVelocity, boolean graph) {
+    public Perceptron(E entity, UUID id, Point3i location, int aoiRadius, int maximumVelocity, boolean graph) {
         super(entity, id, location, aoiRadius, maximumVelocity);
         this.aoiRadius = aoiRadius;
         entity.setCursor(this);
         soi = new SFVoronoi(graph);
-        thisAsPeer = new Peer(this, sim, id, location, aoiRadius,
-                              maximumVelocity);
+        thisAsPeer = new Peer(this, sim, id, location, aoiRadius, maximumVelocity);
         soi.insert(thisAsPeer, location);
     }
 
@@ -73,7 +69,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     }
 
     public Collection<Peer> getNeighbors() {
-        final ArrayList<Peer> neighbors = new ArrayList<Peer>();
+        final ArrayList<Peer> neighbors = new ArrayList<>();
         for (Peer peer : soi.getPeers()) {
             if (!peer.equals(this)) {
                 neighbors.add(peer);
@@ -132,8 +128,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
         }
 
         if (!soi.includes(neighbor)) {
-            if (soi.overlaps(thisAsPeer, neighbor.getLocation(),
-                             maxRadiusSquared)) {
+            if (soi.overlaps(thisAsPeer, neighbor.getLocation(), maxRadiusSquared)) {
                 soi.insert(neighbor, neighbor.getLocation());
             }
             return;
@@ -169,8 +164,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
         for (Peer peer : peers) {
             if (!soi.includes(peer)) {
                 soi.insert(peer.clone(), peer.getLocation());
-                if (soi.overlaps(thisAsPeer, peer.getLocation(),
-                                 peer.getMaximumRadiusSquared())) {
+                if (soi.overlaps(thisAsPeer, peer.getLocation(), peer.getMaximumRadiusSquared())) {
                     peer.perceive(thisAsPeer);
                 }
             }
@@ -234,7 +228,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
             Point3i nLocation = neighbor.getLocation();
             sim.move(neighbor.getSim(), nLocation, velocity);
         } else {
-            soiSet.remove(neighbor.getSim());
+            soiSet.remove(neighbor.getId());
             sim.fade(neighbor.getSim());
         }
     }
@@ -261,14 +255,12 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
      * neighbor)
      */
     protected void removeNonOverlapped() {
-        ArrayList<Peer> removed = new ArrayList<Peer>();
+        ArrayList<Peer> removed = new ArrayList<>();
         for (Peer neighbor : soi.getPeers()) {
-            if (!equals(neighbor)
-                && !soi.overlaps(thisAsPeer,
-                                 neighbor.getLocation(),
-                                 Math.max(maxRadiusSquared,
-                                          neighbor.getMaximumRadiusSquared()))
-                && !soi.isEnclosing(neighbor, thisAsPeer)) {
+            if (!equals(neighbor) &&
+                !soi.overlaps(thisAsPeer, neighbor.getLocation(),
+                              Math.max(maxRadiusSquared, neighbor.getMaximumRadiusSquared())) &&
+                !soi.isEnclosing(neighbor, thisAsPeer)) {
                 removed.add(neighbor);
             }
         }
