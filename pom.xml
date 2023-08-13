@@ -43,6 +43,7 @@
                 https://maven.pkg.github.com/${repository-owner}/${repository-name}</url>
             <snapshots>
                 <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
