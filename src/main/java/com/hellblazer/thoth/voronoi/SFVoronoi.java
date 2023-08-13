@@ -79,12 +79,6 @@ public class SFVoronoi implements SphereOfInteraction {
         }
     }
 
-    // returns the closest node to a point
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#closestTo(javax.vecmath.Point3i)
-     */
     @Override
     public Peer closestTo(Point3i coord) {
         // assume the first node is the closest
@@ -105,23 +99,12 @@ public class SFVoronoi implements SphereOfInteraction {
         return closest;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#getAliased(T)
-     */
     @Override
     public Peer getAliased(Peer id) {
         Site site = sites.get(id.getId());
         return site != null ? site.peer : null;
     }
 
-    // get a list of enclosing neighbors
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#getEnclosingNeighbors(T)
-     */
     @Override
     public Collection<Peer> getEnclosingNeighbors(Peer id) {
         Site site = sites.get(id.getId());
@@ -147,22 +130,11 @@ public class SFVoronoi implements SphereOfInteraction {
         return edges;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#includes(T)
-     */
     @Override
     public boolean includes(Peer peer) {
         return sites.containsKey(peer.getId());
     }
 
-    // insert a new site, the first inserted is myself
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#insert(T, javax.vecmath.Point3i)
-     */
     @Override
     public void insert(Peer id, Point3i coord) {
         // avoid duplicate insert
@@ -174,13 +146,6 @@ public class SFVoronoi implements SphereOfInteraction {
         }
     }
 
-    // check if the node is a boundary neighbor
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#isBoundary(T, javax.vecmath.Point3i,
-     * int)
-     */
     @Override
     public boolean isBoundary(Peer id, Point3i center, int radiusSquared) {
         Site site = sites.get(id.getId());
@@ -203,12 +168,6 @@ public class SFVoronoi implements SphereOfInteraction {
         return false;
     }
 
-    // check if the node 'id' is an enclosing neighbor of 'center_node_id'
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#isEnclosing(T, T)
-     */
     @Override
     public boolean isEnclosing(Peer id, Peer center_node_id) {
         Site site = sites.get(center_node_id.getId());
@@ -226,11 +185,6 @@ public class SFVoronoi implements SphereOfInteraction {
     }
 
     // check if a circle overlaps with a particular node
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#overlaps(T, javax.vecmath.Point3i, int)
-     */
     @Override
     public boolean overlaps(Peer id, Point3i center, int radiusSquared) {
         Site site = sites.get(id.getId());
@@ -240,12 +194,6 @@ public class SFVoronoi implements SphereOfInteraction {
         return site.distanceSquared(center.x, center.y) <= radiusSquared;
     }
 
-    // remove a site
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#remove(T)
-     */
     @Override
     public void remove(Peer id) {
         if (sites.remove(id.getId()) != null) {
@@ -254,11 +202,6 @@ public class SFVoronoi implements SphereOfInteraction {
     }
 
     // modify the coordinates of a site
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.hellblazer.thoth.voronoi.AOI#update(T, javax.vecmath.Point3i)
-     */
     @Override
     public void update(Peer id, Point3i coord) {
         invalidated = true;
