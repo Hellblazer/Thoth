@@ -4,6 +4,7 @@ on: [push]
 
 env: 
      MAVEN_OPTS: "--enable-preview"
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
