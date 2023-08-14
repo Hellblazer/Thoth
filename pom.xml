@@ -19,43 +19,7 @@
         <junit.version>5.9.1</junit.version>
         <logback.version>1.2.12</logback.version>
         <prime-mover.version>0.1.0-SNAPSHOT</prime-mover.version>
-
-        <repository-owner>Hellblazer</repository-owner>
-        <repository-name>Prime-Mover</repository-name>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>
-                https://maven.pkg.github.com/${repository-owner}/${repository-name}</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>githug-plugins</id>
-            <url>
-                https://maven.pkg.github.com/${repository-owner}/${repository-name}</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Hellblazer Prime Mover Packages</name>
-            <url>
-                https://maven.pkg.github.com/${repository-owner}/${repository-name}</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -109,6 +73,26 @@
             </comments>
         </license>
     </licenses>
+    
+    <repositories>
+        <repository>
+            <id>hell-repo</id>
+            <url>https://raw.githubusercontent.com/Hellblazer/repo-hell/main/mvn-artifact</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>plugin-hell-repo</id>
+            <url>https://raw.githubusercontent.com/Hellblazer/repo-hell/main/mvn-artifact</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <plugins>
@@ -176,6 +160,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId> 
+                <configuration>
+                    <altDeploymentRepository>
+                        internal.repo::default::file://${env.INTERNAL_REPOSITORY}
+                    </altDeploymentRepository>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
