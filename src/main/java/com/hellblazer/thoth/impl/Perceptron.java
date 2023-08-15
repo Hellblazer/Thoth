@@ -71,7 +71,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     public Collection<Peer> getNeighbors() {
         final ArrayList<Peer> neighbors = new ArrayList<>();
         for (Peer peer : soi.getPeers()) {
-            if (!peer.equals(this)) {
+            if (!peer.equals(thisAsPeer)) {
                 neighbors.add(peer);
             }
         }
@@ -95,7 +95,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     public void leave() {
         active = false;
         for (Peer peer : soi.getPeers()) {
-            if (!peer.equals(this)) {
+            if (!peer.equals(thisAsPeer)) {
                 peer.fadeFrom(thisAsPeer);
             }
         }
@@ -145,7 +145,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
         soi.update(thisAsPeer, location);
         removeNonOverlapped();
         for (Peer peer : soi.getPeers()) {
-            if (!peer.equals(this)) {
+            if (!peer.equals(thisAsPeer)) {
                 if (soi.isBoundary(peer, location, maxRadiusSquared)) {
                     peer.moveBoundary(thisAsPeer);
                 } else {
@@ -192,7 +192,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
         }
 
         Peer closest = soi.closestTo(joiner.getLocation());
-        if (closest != null && !closest.equals(this) && !closest.equals(from)) {
+        if (closest != null && !closest.equals(thisAsPeer) && !closest.equals(from)) {
             closest.query(thisAsPeer, joiner);
         } else {
             add(joiner);
@@ -206,7 +206,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     }
 
     protected void handshakeWith(Peer node) {
-        if (node.equals(this)) {
+        if (node.equals(thisAsPeer)) {
             return;
         }
         Collection<Peer> peers = soi.getEnclosingNeighbors(node);
@@ -257,7 +257,7 @@ public class Perceptron<E extends Perceiving> extends AbstractNode<E> {
     protected void removeNonOverlapped() {
         ArrayList<Peer> removed = new ArrayList<>();
         for (Peer neighbor : soi.getPeers()) {
-            if (!equals(neighbor) &&
+            if (!thisAsPeer.equals(neighbor) &&
                 !soi.overlaps(thisAsPeer, neighbor.getLocation(),
                               Math.max(maxRadiusSquared, neighbor.getMaximumRadiusSquared())) &&
                 !soi.isEnclosing(neighbor, thisAsPeer)) {
