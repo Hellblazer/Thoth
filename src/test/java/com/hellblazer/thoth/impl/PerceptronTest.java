@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 import com.hellblazer.geometry.Vector3i;
 import com.hellblazer.primeMover.controllers.SteppingController;
-import com.hellblazer.primeMover.runtime.Framework;
+import com.hellblazer.primeMover.runtime.Kairos;
 import com.hellblazer.thoth.Perceiving;
 
 /**
@@ -48,7 +48,7 @@ public class PerceptronTest {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testTracking() throws Throwable {
         SteppingController controller = new SteppingController();
-        Framework.setController(controller);
+        Kairos.setController(controller);
         controller.setCurrentTime(0);
 
         int x = 1000;

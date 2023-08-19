@@ -28,7 +28,7 @@ import javax.vecmath.Point3i;
 
 import com.hellblazer.primeMover.Kronos;
 import com.hellblazer.primeMover.controllers.SimulationController;
-import com.hellblazer.primeMover.runtime.Framework;
+import com.hellblazer.primeMover.runtime.Kairos;
 import com.hellblazer.thoth.Perceiving;
 
 /**
@@ -53,7 +53,7 @@ public class SimulationDriver {
 
     public static void main(String[] argv) throws Exception {
         SimulationController controller = new SimulationController();
-        Framework.setController(controller);
+        Kairos.setController(controller);
         long now = System.currentTimeMillis();
         new SimulationDriver().run();
         controller.eventLoop();

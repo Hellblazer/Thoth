@@ -42,7 +42,7 @@ import javax.swing.JFrame;
 import javax.vecmath.Point3i;
 
 import com.hellblazer.primeMover.controllers.SteppingController;
-import com.hellblazer.primeMover.runtime.Framework;
+import com.hellblazer.primeMover.runtime.Kairos;
 import com.hellblazer.thoth.impl.Node;
 import com.hellblazer.thoth.impl.Perceptron;
 
@@ -57,7 +57,7 @@ public class PerceptronSimulation extends JFrame implements KeyListener, MouseLi
         @Override
         public void run() {
             synchronized (sync) {
-                Framework.setController(controller);
+                Kairos.setController(controller);
                 if (next_ready) {
                     steps++;
                     for (DisplayedEntity entity : entities) {
@@ -135,7 +135,7 @@ public class PerceptronSimulation extends JFrame implements KeyListener, MouseLi
     @SuppressWarnings({ "unchecked" })
     public void init() {
         controller = new SteppingController();
-        Framework.setController(controller);
+        Kairos.setController(controller);
         controller.setCurrentTime(0);
         System.err.println("Thoth demo (Java applet version) Hal Hildebrand (c) 2008");
         setSize(dim_x, dim_y);
