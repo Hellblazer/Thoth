@@ -97,7 +97,7 @@ public class PerceptronTest {
                     lastDistance.put(perceptron, distance);
                 }
             }
+            frist = false;
         }
-        frist = false;
     }
 }
