@@ -22,10 +22,12 @@ package com.hellblazer.thoth.impl;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
 import javax.vecmath.Point3i;
+import javax.vecmath.Tuple3i;
 
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +60,7 @@ public class PerceptronTest {
         int flipStep = 75;
         int maxVelocity = 10;
         Random random = new Random(666);
+        var lastDistance = new HashMap<Perceptron<?>, Tuple3i>();
 
         Perceptron<Perceiving>[] perceptrons = new Perceptron[numNodes];
         SimEntityImpl[] entities = new SimEntityImpl[numNodes];
@@ -66,10 +69,12 @@ public class PerceptronTest {
             perceptrons[i] = new Perceptron(entities[i], new UUID(0, i),
                                             new Point3i(random.nextInt(x), random.nextInt(y), 0), aoi, 10, false);
             perceptrons[i].join(perceptrons[0].getThisAsPeer());
+            lastDistance.put(perceptrons[i], perceptrons[i].location);
         }
 
         controller.step();
 
+        boolean frist = true;
         for (int step = 0; step < maxStep; step++) {
             for (SimEntity entity : entities) {
                 entity.doSomething();
@@ -85,8 +90,14 @@ public class PerceptronTest {
                         assertTrue(node.getLocation().equals(neighbor.getLocation()), step + ": Node [" + perceptron
                         + "] Model location does not match neighbor's reported location: [" + node + "]");
                     }
+                    lastDistance.get(perceptron).sub(distance);
+                    if (!frist) {
+                        assertTrue(distance.lengthSquared() > 0);
+                    }
+                    lastDistance.put(perceptron, distance);
                 }
             }
         }
+        frist = false;
     }
 }

@@ -57,6 +57,7 @@ public class PerceptronSimulation extends JFrame implements KeyListener, MouseLi
         @Override
         public void run() {
             synchronized (sync) {
+                Framework.setController(controller);
                 if (next_ready) {
                     steps++;
                     for (DisplayedEntity entity : entities) {
@@ -77,8 +78,7 @@ public class PerceptronSimulation extends JFrame implements KeyListener, MouseLi
         }
     }
 
-    final static Color bg = Color.white;
-
+    final static Color        bg               = Color.white;
     final static Color        fg               = Color.black;
     final static BasicStroke  stroke           = new BasicStroke(2.0f);
     private static final int  RANDOM_SEED      = 666;
@@ -86,7 +86,7 @@ public class PerceptronSimulation extends JFrame implements KeyListener, MouseLi
 
     public static void main(String[] argv) {
         var sim = new PerceptronSimulation();
-        sim.setSize(400, 600);
+        sim.setSize(600, 400);
         sim.init();
         sim.setVisible(true);
     }
