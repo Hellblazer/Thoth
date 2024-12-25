@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hellblazer</groupId>
     <artifactId>thoth</artifactId>
@@ -13,8 +13,8 @@
     </description>
 
     <properties>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.1</junit.version>
         <logback.version>1.2.12</logback.version>
@@ -34,8 +34,8 @@
         </dependency>
         <dependency>
             <groupId>com.hellblazer.primeMover</groupId>
-            <artifactId>maven-plugin</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <artifactId>primemover-maven-plugin</artifactId>
+            <version>${prime-mover.version}</version>
         </dependency>
 
         <!-- Test Only Dependencies Below This Line-->
@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.8.1</version>
+            <version>5.14.2</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -73,7 +73,7 @@
             </comments>
         </license>
     </licenses>
-    
+
     <repositories>
         <repository>
             <id>hell-repo</id>
@@ -83,7 +83,7 @@
             </snapshots>
         </repository>
     </repositories>
-    
+
     <pluginRepositories>
         <pluginRepository>
             <id>plugin-hell-repo</id>
@@ -98,7 +98,8 @@
         <plugins>
             <plugin>
                 <groupId>com.hellblazer.primeMover</groupId>
-                <artifactId>maven-plugin</artifactId>
+                <artifactId>primemover-maven-plugin</artifactId>
+                <version>${prime-mover.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -107,23 +108,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <argLine>--enable-preview</argLine>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <release>20</release>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -152,9 +136,9 @@
                                 <requireMavenVersion>
                                     <version>[3.8.3,)</version>
                                 </requireMavenVersion>
-                                <dependencyConvergence />
+                                <dependencyConvergence/>
                                 <requireJavaVersion>
-                                    <version>[20,)</version>
+                                    <version>[23,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -162,7 +146,7 @@
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-deploy-plugin</artifactId> 
+                <artifactId>maven-deploy-plugin</artifactId>
                 <configuration>
                     <altDeploymentRepository>
                         internal.repo::default::file://${env.INTERNAL_REPOSITORY}
@@ -204,7 +188,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.13.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -214,12 +198,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M9</version>
+                    <version>3.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.2.1</version>
+                    <version>3.3.1</version>
                 </plugin>
                 <plugin>
                     <groupId>com.hellblazer.primeMover</groupId>
@@ -228,7 +212,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.3</version>
                 </plugin>
             </plugins>
         </pluginManagement>
